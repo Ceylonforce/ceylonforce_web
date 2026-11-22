@@ -1,16 +1,34 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useReducedMotion } from '../hooks/useReducedMotion'
-import { industries } from '../data/industries'
+import { industries, type ServiceCard } from '../data/industries'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const tech = industries.find((i) => i.index === '01')
+const cards: ServiceCard[] = tech?.pricingCards ?? []
+
 export default function Industries() {
+  const categories = useMemo(
+    () => {
+      const seen = new Set<string>()
+      const list: string[] = []
+      for (const c of cards) {
+        if (c.category && !seen.has(c.category)) {
+          seen.add(c.category)
+          list.push(c.category)
+        }
+      }
+      return list
+    },
+    [cards],
+  )
   const sectionRef = useRef<HTMLElement>(null)
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [activeCategory, setActiveCategory] = useState<string>('All')
   const reduced = useReducedMotion()
+
+  const filtered = cards.filter((c) => activeCategory === 'All' || c.category === activeCategory)
 
   useEffect(() => {
     const section = sectionRef.current
@@ -30,25 +48,21 @@ export default function Industries() {
       )
 
       gsap.fromTo(
-        '.cf-industry-row',
-        { opacity: 0, y: 20 },
+        '.cf-industry-card',
+        { y: 40, opacity: 0 },
         {
-          opacity: 1,
           y: 0,
+          opacity: 1,
           duration: 0.6,
-          ease: 'power2.out',
-          stagger: 0.07,
-          scrollTrigger: { trigger: '.cf-industries__list', start: 'top 80%', once: true },
+          ease: 'power3.out',
+          stagger: 0.08,
+          scrollTrigger: { trigger: '.cf-industries__grid', start: 'top 80%', once: true },
         },
       )
     }, section)
 
     return () => ctx.revert()
-  }, [reduced])
-
-  const toggleExpand = (i: number) => {
-    setExpandedIndex((prev) => (prev === i ? null : i))
-  }
+  }, [reduced, filtered.length])
 
   return (
     <section ref={sectionRef} id="industries" className="cf-industries">
@@ -68,47 +82,70 @@ export default function Industries() {
           </div>
         </header>
 
-        <ul
-          className={`cf-industries__list ${activeIndex !== null ? 'has-active' : ''}`}
-          role="list"
-        >
-          {industries.map((ind, i) => (
-            <li
-              key={ind.index}
-              className={`cf-industry-row ${activeIndex === i ? 'is-active' : ''} ${expandedIndex === i ? 'is-expanded' : ''}`}
-              onMouseEnter={() => !reduced && setActiveIndex(i)}
-              onMouseLeave={() => !reduced && setActiveIndex(null)}
-            >
-              <button
-                className="cf-industry-row__trigger"
-                aria-expanded={expandedIndex === i}
-                onClick={() => toggleExpand(i)}
-              >
-                <span className="cf-industry-row__index">{ind.index}</span>
-                <span className="cf-industry-row__name">{ind.name}</span>
-                <span className="cf-industry-row__tag">{ind.description}</span>
-                <span className="cf-industry-row__arrow" aria-hidden="true">
-                  {expandedIndex === i ? '−' : '+'}
-                </span>
-              </button>
+        {tech && (
+          <div className="cf-industry-meta">
+            <span className="cf-industry-meta__index">{tech.index}</span>
+            <span className="cf-industry-meta__name">{tech.name}</span>
+            <p className="cf-industry-meta__desc">{tech.description}</p>
+          </div>
+        )}
 
-              {/* Expandable capabilities panel */}
-              <div
-                className="cf-industry-row__panel"
-                aria-hidden={expandedIndex !== i}
-              >
-                <ul className="cf-industry-row__caps" role="list">
-                  {ind.capabilities.map((cap) => (
-                    <li key={cap} className="cf-industry-row__cap">{cap}</li>
+        {/* Category filter pills */}
+        <div className="cf-industries__filters">
+          {[ 'All', ...categories ].map((cat) => (
+            <button
+              key={cat}
+              className={`cf-industries__filter ${activeCategory === cat ? 'is-active' : ''}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Pricing cards grid */}
+        <ul className="cf-industries__grid" role="list">
+          {filtered.map((card) => (
+            <li key={`${card.category}-${card.title}`} className="cf-industry-card">
+              <div className="cf-industry-card__inner">
+                <div className="cf-industry-card__badge">{card.badge}</div>
+                <div className="cf-industry-card__price">
+                  <span className="cf-industry-card__price-main">{card.price}</span>
+                </div>
+                <h3 className="cf-industry-card__title">{card.title}</h3>
+                {card.category && (
+                  <span className="cf-industry-card__category">{card.category}</span>
+                )}
+                {card.image && (
+                  <div className="cf-industry-card__image-wrap">
+                    <img
+                      src={card.image}
+                      alt={`${card.title} preview`}
+                      className="cf-industry-card__image"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <ul className="cf-industry-card__features" role="list">
+                  {card.features.map((f, i) => (
+                    <li key={i} className="cf-industry-card__feature">
+                      <span aria-hidden="true">›</span> {f}
+                    </li>
                   ))}
                 </ul>
-                <a href="#contact" className="cf-industry-row__cta">
-                  START A PROJECT →
+                <a href="#contact" className="cf-industry-card__cta">
+                  Get Quote
                 </a>
               </div>
             </li>
           ))}
         </ul>
+
+        <div className="cf-industries__cta-wrap">
+          <a href="#contact" className="cf-industries__cta">
+            START A PROJECT →
+          </a>
+        </div>
 
       </div>
     </section>
