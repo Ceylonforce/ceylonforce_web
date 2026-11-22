@@ -944,137 +944,104 @@
   max-width: 460px;
 }
 
-/* Industry list */
-.cf-industries__list {
+/* Industry rows — all 7 verticals */
+.cf-industries__rows {
   list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .cf-industry-row {
-  border-top: 1px solid var(--border);
-  transition: border-color 0.3s ease;
-}
-
-.cf-industries__list .cf-industry-row:last-child {
+  padding: 40px 0;
   border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease;
 }
 
-.cf-industry-row__trigger {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 56px 1fr auto 40px;
+.cf-industry-row:last-child {
+  border-bottom: none;
+}
+
+.cf-industry-row:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.cf-industry-row__meta {
+  display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 20px 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.25s ease;
+  gap: 16px;
+  margin-bottom: 16px;
 }
-
-.cf-industry-row__trigger:hover { background: rgba(255,255,255,0.015); }
 
 .cf-industry-row__index {
-  font-size: 0.64rem;
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
   color: var(--muted);
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: var(--font-tech);
 }
 
 .cf-industry-row__name {
-  font-size: clamp(1.4rem, 3vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -0.06em;
+  font-size: clamp(1.6rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-  transition: color 0.25s ease;
+  color: #fff;
   line-height: 1;
 }
 
-.cf-industries__list.has-active .cf-industry-row:not(.is-active) .cf-industry-row__name {
-  color: rgba(255,255,255,0.3);
-}
-
-.cf-industry-row.is-active .cf-industry-row__name { color: #fff; }
-
-.cf-industry-row__tag {
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+.cf-industry-row__desc {
   color: var(--muted);
-  max-width: 360px;
-  line-height: 1.5;
-  transition: color 0.25s ease;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0;
 }
 
-.cf-industries__list.has-active .cf-industry-row:not(.is-active) .cf-industry-row__tag {
-  opacity: 0.4;
-}
-
-.cf-industry-row__arrow {
-  font-size: 1.2rem;
-  color: rgba(255,255,255,0.4);
-  justify-self: end;
-  transition: transform 0.35s var(--ease-expo), color 0.25s ease;
-}
-
-.cf-industry-row.is-expanded .cf-industry-row__arrow {
-  transform: rotate(90deg);
-  color: #fff;
-}
-
-/* Expandable panel */
-.cf-industry-row__panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s var(--ease-expo);
-  overflow: hidden;
-}
-
-.cf-industry-row.is-expanded .cf-industry-row__panel {
-  grid-template-rows: 1fr;
-}
-
-.cf-industry-row__panel > * {
-  overflow: hidden;
-}
-
+/* Capability pills */
 .cf-industry-row__caps {
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding: 0 0 24px 80px;
+  margin-bottom: 32px;
 }
 
 .cf-industry-row__cap {
-  font-size: 0.7rem;
+  font-size: 0.64rem;
   letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: rgba(255,255,255,0.75);
   padding: 7px 16px;
   border: 1px solid var(--border-md);
   border-radius: 999px;
-  text-transform: uppercase;
+  background: transparent;
 }
 
 .cf-industry-row__cta {
-  display: inline-block;
-  margin: 0 0 32px 80px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-size: 0.68rem;
   letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: #fff;
   text-decoration: none;
   padding: 12px 22px;
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 999px;
-  transition: background 0.25s ease, border-color 0.25s ease;
+  font-family: var(--font-tech);
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .cf-industry-row__cta:hover {
   background: rgba(255,255,255,0.08);
   border-color: rgba(255,255,255,0.35);
+  transform: translateY(-2px);
 }
 
-/* ─── INDUSTRY META (Technology) ──────────────────────────── */
+/* Technology industry meta */
 .cf-industry-meta {
   display: flex;
   align-items: center;

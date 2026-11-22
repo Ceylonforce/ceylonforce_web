@@ -24,6 +24,7 @@ export default function Industries() {
     },
     [cards],
   )
+
   const sectionRef = useRef<HTMLElement>(null)
   const [activeCategory, setActiveCategory] = useState<string>('All')
   const reduced = useReducedMotion()
@@ -56,6 +57,19 @@ export default function Industries() {
           duration: 1,
           ease: 'power3.out',
           scrollTrigger: { trigger: '.cf-industries__heading', start: 'top 85%', once: true },
+        },
+      )
+
+      gsap.fromTo(
+        '.cf-industry-row',
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power3.out',
+          stagger: 0.1,
+          scrollTrigger: { trigger: '.cf-industries__rows', start: 'top 80%', once: true },
         },
       )
 
@@ -94,67 +108,88 @@ export default function Industries() {
           </div>
         </header>
 
-        {tech && (
-          <div className="cf-industry-meta">
-            <span className="cf-industry-meta__index">{tech.index}</span>
-            <span className="cf-industry-meta__name">{tech.name}</span>
-            <p className="cf-industry-meta__desc">{tech.description}</p>
-          </div>
-        )}
-
-        {/* Category filter pills */}
-        <div className="cf-industries__filters">
-          {[ 'All', ...categories ].map((cat) => (
-            <button
-              key={cat}
-              className={`cf-industries__filter ${activeCategory === cat ? 'is-active' : ''}`}
-              onClick={() => setActiveCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Pricing cards grid */}
-        <ul className="cf-industries__grid" role="list">
-          {filtered.map((card) => (
-            <li key={`${card.category ?? 'default'}-${card.title}`} className="cf-industry-card">
-              <div className="cf-industry-card__inner">
-                <div className="cf-industry-card__badge">{card.badge}</div>
-                <div className="cf-industry-card__price">
-                  <span className="cf-industry-card__price-main">{card.price}</span>
-                </div>
-                <h3 className="cf-industry-card__title">{card.title}</h3>
-                {card.category && (
-                  <span className="cf-industry-card__category">{card.category}</span>
-                )}
-                <div className="cf-industry-card__image-wrap">
-                  {card.image ? (
-                    <img
-                      src={card.image}
-                      alt={`${card.title} preview`}
-                      className="cf-industry-card__image"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className={`cf-industry-card__placeholder cf-industry-card__placeholder--${(card.category ?? 'default').toLowerCase().replace(/\s+/g, '-')}`}>
-                      <span className="cf-industry-card__placeholder-icon">
-                        {categoryIcon(card.category ?? 'default')}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <ul className="cf-industry-card__features" role="list">
-                  {card.features.map((f, i) => (
-                    <li key={i} className="cf-industry-card__feature">
-                      <span aria-hidden="true">›</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#contact" className="cf-industry-card__cta">
-                  Get Quote
-                </a>
+        {/* All industry rows */}
+        <ul className="cf-industries__rows" role="list">
+          {industries.map((ind) => (
+            <li key={ind.index} className="cf-industry-row">
+              <div className="cf-industry-row__meta">
+                <span className="cf-industry-row__index">{ind.index}</span>
+                <span className="cf-industry-row__name">{ind.name}</span>
+                <p className="cf-industry-row__desc">{ind.description}</p>
               </div>
+
+              <div className="cf-industry-row__caps">
+                {ind.capabilities.map((cap) => (
+                  <span key={cap} className="cf-industry-row__cap">
+                    {cap}
+                  </span>
+                ))}
+              </div>
+
+              {ind.index === '01' && (
+                <>
+                  {/* Category filter pills */}
+                  <div className="cf-industries__filters">
+                    {[ 'All', ...categories ].map((cat) => (
+                      <button
+                        key={cat}
+                        className={`cf-industries__filter ${activeCategory === cat ? 'is-active' : ''}`}
+                        onClick={() => setActiveCategory(cat)}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Pricing cards grid */}
+                  <ul className="cf-industries__grid" role="list">
+                    {filtered.map((card) => (
+                      <li key={`${card.category ?? 'default'}-${card.title}`} className="cf-industry-card">
+                        <div className="cf-industry-card__inner">
+                          <div className="cf-industry-card__badge">{card.badge}</div>
+                          <div className="cf-industry-card__price">
+                            <span className="cf-industry-card__price-main">{card.price}</span>
+                          </div>
+                          <h3 className="cf-industry-card__title">{card.title}</h3>
+                          {card.category && (
+                            <span className="cf-industry-card__category">{card.category}</span>
+                          )}
+                          <div className="cf-industry-card__image-wrap">
+                            {card.image ? (
+                              <img
+                                src={card.image}
+                                alt={`${card.title} preview`}
+                                className="cf-industry-card__image"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className={`cf-industry-card__placeholder cf-industry-card__placeholder--${(card.category ?? 'default').toLowerCase().replace(/\s+/g, '-')}`}>
+                                <span className="cf-industry-card__placeholder-icon">
+                                  {categoryIcon(card.category ?? 'default')}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                          <ul className="cf-industry-card__features" role="list">
+                            {card.features.map((f, i) => (
+                              <li key={i} className="cf-industry-card__feature">
+                                <span aria-hidden="true">›</span> {f}
+                              </li>
+                            ))}
+                          </ul>
+                          <a href="#contact" className="cf-industry-card__cta">
+                            Get Quote
+                          </a>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              <a href="#contact" className="cf-industry-row__cta">
+                START A PROJECT →
+              </a>
             </li>
           ))}
         </ul>
