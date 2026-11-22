@@ -120,7 +120,7 @@ export default function Navigation() {
         </nav>
 
         <div className="cf-mobile-menu__foot">
-          <span>ceylonforce.holdings@gmail.com</span>
+          <span>ceylonforce@gmail.com</span>
           <span>© 2026 CEYLONFORCE</span>
         </div>
       </div>

@@ -662,10 +662,10 @@ export default function ParticleHero() {
         {/* UI overlay — sits above the canvas */}
         <div className="ph-ui">
           <div className="ph-ui__inner">
-            <h1 className="ph-title" aria-label="CeylonForce Holdings">
+            <h1 className="ph-title" aria-label="CeylonForce">
               <span className="ph-title__line ph-title__line--1">CEYLON</span>
               <span className="ph-title__line ph-title__line--2">FORCE</span>
-              <span className="ph-title__line ph-title__line--3 ph-serif">Holdings</span>
+
             </h1>
 
             <p className="ph-sub">

@@ -2,7 +2,7 @@ export const brand = {
   name: 'CEYLONFORCE',
   tagline: '',
   subtitle: 'Digital Technology & Growth',
-  company: 'CeylonForce Holdings Pvt Ltd',
+  company: 'CeylonForce Pvt Ltd',
   copyright: '© 2026 CeylonForce. All rights reserved.',
 }
 
