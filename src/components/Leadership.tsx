@@ -20,13 +20,6 @@ const team = [
     description:
       'Oversees day-to-day operations, delivery workflows and cross-functional teams to keep every engagement seamless, on schedule and built to standard.',
   },
-  {
-    name: 'Chamith Shaminda De Silva',
-    role: 'Chief Technology Officer',
-    image: '/chamith.png',
-    description:
-      'Directs technical architecture and engineering execution across custom software, AI automation and immersive web experiences.',
-  },
 ]
 
 export default function Leadership() {
