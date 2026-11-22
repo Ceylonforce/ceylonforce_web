@@ -6,6 +6,7 @@ export type Industry = {
   description: string
   capabilities: string[]
   accent: string
+  details?: string
 }
 
 export const industries: Industry[] = [
@@ -16,6 +17,14 @@ export const industries: Industry[] = [
     href: '#industries',
     description: 'Digital products, platforms and systems built to scale.',
     capabilities: ['Web Applications', 'SaaS Platforms', 'API Systems', 'Cloud Infrastructure', 'Custom Software'],
+    details: `Service Pricing Guide
+Websites, POS Systems, E-Commerce, Portfolios & Mobile Apps. All amounts in LKR.
+
+Websites
+Package | Cost (LKR) | Price (LKR) | Profit (LKR) | Details
+Standard (10 pages) | 6,000 | 25,900 | 19,900 | Basic UI (standard quality)\nNo advanced animations\nDesktop & mobile responsive
+Premium | 6,000 | 50,900 | 44,900 | Advanced attractive UI\nAdvanced animations & scroll animations\nDesktop & mobile responsive (all)\nBuilt using latest trends
+... (truncated for brevity)`,
     accent: '#D4D4D4',
   },
   {
