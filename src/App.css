@@ -1249,6 +1249,9 @@
   border: 1px solid var(--border);
   background: #000;
   aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cf-industry-card__image {
@@ -1266,6 +1269,52 @@
 
 .cf-industry-card__inner:hover .cf-industry-card__image {
   transform: scale(1.03);
+}
+
+/* Category placeholder icons (matching visual for every card) */
+.cf-industry-card__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 24px;
+  gap: 12px;
+}
+
+.cf-industry-card__placeholder-icon {
+  font-size: 3.5rem;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+
+/* Category-specific gradient backgrounds */
+.cf-industry-card__placeholder--websites {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.cf-industry-card__placeholder--point-of-sale {
+  background: linear-gradient(135deg, #1e2a1e 0%, #2d4a2d 100%);
+}
+
+.cf-industry-card__placeholder--e-commerce {
+  background: linear-gradient(135deg, #2e1a2e 0%, #4a2d4a 100%);
+}
+
+.cf-industry-card__placeholder--portfolios {
+  background: linear-gradient(135deg, #2e2e1a 0%, #4a4a2d 100%);
+}
+
+.cf-industry-card__placeholder--digital-invitations {
+  background: linear-gradient(135deg, #2e1e2e 0%, #4a2d4a 100%);
+}
+
+.cf-industry-card__placeholder--mobile-apps-ios {
+  background: linear-gradient(135deg, #1a1e2e 0%, #2d3d4a 100%);
+}
+
+.cf-industry-card__placeholder--default {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
 }
 
 .cf-industry-card__cta {

@@ -30,6 +30,18 @@ export default function Industries() {
 
   const filtered = cards.filter((c) => activeCategory === 'All' || c.category === activeCategory)
 
+  const categoryIcon = (category: string): string => {
+    const icons: Record<string, string> = {
+      Websites: '🌐',
+      'Point-of-Sale': '💳',
+      'E-Commerce': '🛒',
+      Portfolios: '📸',
+      'Digital Invitations': '💌',
+      'Mobile Apps (iOS)': '📱',
+    }
+    return icons[category] || '✦'
+  }
+
   useEffect(() => {
     const section = sectionRef.current
     if (!section || reduced) return
@@ -106,7 +118,7 @@ export default function Industries() {
         {/* Pricing cards grid */}
         <ul className="cf-industries__grid" role="list">
           {filtered.map((card) => (
-            <li key={`${card.category}-${card.title}`} className="cf-industry-card">
+            <li key={`${card.category ?? 'default'}-${card.title}`} className="cf-industry-card">
               <div className="cf-industry-card__inner">
                 <div className="cf-industry-card__badge">{card.badge}</div>
                 <div className="cf-industry-card__price">
@@ -116,16 +128,22 @@ export default function Industries() {
                 {card.category && (
                   <span className="cf-industry-card__category">{card.category}</span>
                 )}
-                {card.image && (
-                  <div className="cf-industry-card__image-wrap">
+                <div className="cf-industry-card__image-wrap">
+                  {card.image ? (
                     <img
                       src={card.image}
                       alt={`${card.title} preview`}
                       className="cf-industry-card__image"
                       loading="lazy"
                     />
-                  </div>
-                )}
+                  ) : (
+                    <div className={`cf-industry-card__placeholder cf-industry-card__placeholder--${(card.category ?? 'default').toLowerCase().replace(/\s+/g, '-')}`}>
+                      <span className="cf-industry-card__placeholder-icon">
+                        {categoryIcon(card.category ?? 'default')}
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <ul className="cf-industry-card__features" role="list">
                   {card.features.map((f, i) => (
                     <li key={i} className="cf-industry-card__feature">
